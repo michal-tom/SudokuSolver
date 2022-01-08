@@ -34,7 +34,7 @@
 
             foreach (var cell in cells)
             {
-                AddCellValue(cell, cell.AvailableValues.First());
+                SetCellValue(cell, cell.AvailableValues.First());
             }
 
             return true;
@@ -63,13 +63,13 @@
 
             foreach(var newCellValue in newCellValues)
             {
-                AddCellValue(newCellValue.Key, newCellValue.Value);
+                SetCellValue(newCellValue.Key, newCellValue.Value);
             }
 
             return true;
         }
 
-        private static bool AddCellValue(Cell cell, byte value)
+        private static bool SetCellValue(Cell cell, byte value)
         {
             if (cell.Done || cell.AvailableValues == null || !cell.AvailableValues.Contains(value))
             {
@@ -83,13 +83,13 @@
             cell.AvailableValues = null;
             cell.Grid.SolvingSteps.Add(newSolvingStep);
 
-            var updatedSteps = new List<Cell>();
+            var updatedCells = new List<Cell>();
 
-            updatedSteps.AddRange(UpdateAvailableValuesInCellsGroup(cell.RowCellsGroup, value));
-            updatedSteps.AddRange(UpdateAvailableValuesInCellsGroup(cell.ColumnCellsGroup, value));
-            updatedSteps.AddRange(UpdateAvailableValuesInCellsGroup(cell.BoxCellsGroup, value));
+            updatedCells.AddRange(UpdateAvailableValuesInCellsGroup(cell.RowCellsGroup, value));
+            updatedCells.AddRange(UpdateAvailableValuesInCellsGroup(cell.ColumnCellsGroup, value));
+            updatedCells.AddRange(UpdateAvailableValuesInCellsGroup(cell.BoxCellsGroup, value));
 
-            newSolvingStep.UpdatedAvailableValuesCells = updatedSteps;
+            newSolvingStep.UpdatedAvailableValuesCells = updatedCells;
 
             return true;
         }
