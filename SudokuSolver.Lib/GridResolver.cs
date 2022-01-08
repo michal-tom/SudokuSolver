@@ -76,21 +76,31 @@
                 return false;
             }
 
+            var stepNumber = (byte) (cell.Grid.SolvingSteps.Count + 1);
+            var newSolvingStep = new SolvingStep(stepNumber, cell, value);
+
             cell.Value = value;
             cell.AvailableValues = null;
+            cell.Grid.SolvingSteps.Add(newSolvingStep);
 
-            UpdateAvailableValuesInCellsGroup(cell.RowCellsGroup, value);
-            UpdateAvailableValuesInCellsGroup(cell.ColumnCellsGroup, value);
-            UpdateAvailableValuesInCellsGroup(cell.BoxCellsGroup, value);
+            var updatedSteps = new List<Cell>();
+
+            updatedSteps.AddRange(UpdateAvailableValuesInCellsGroup(cell.RowCellsGroup, value));
+            updatedSteps.AddRange(UpdateAvailableValuesInCellsGroup(cell.ColumnCellsGroup, value));
+            updatedSteps.AddRange(UpdateAvailableValuesInCellsGroup(cell.BoxCellsGroup, value));
+
+            newSolvingStep.UpdatedAvailableValuesCells = updatedSteps;
 
             return true;
         }
 
-        private static void UpdateAvailableValuesInCellsGroup(CellsGroup? cellsGroup, byte value)
+        private static IList<Cell> UpdateAvailableValuesInCellsGroup(CellsGroup? cellsGroup, byte value)
         {
+            var updatedCells = new List<Cell>();
+
             if (cellsGroup == null || cellsGroup.Done)
             {
-                return;
+                return updatedCells;
             }
 
             foreach (var cell in cellsGroup.Cells.Where(p => !p.Done))
@@ -98,8 +108,11 @@
                 if (cell.AvailableValues != null && cell.AvailableValues.Contains(value))
                 {
                     cell.AvailableValues.Remove(value);
+                    updatedCells.Add(cell);
                 }
             }
+
+            return updatedCells;
         }
     }
 }

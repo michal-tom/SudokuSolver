@@ -27,5 +27,7 @@ var isSuccessfull = GridResolver.TrySolve(result.Grid);
 
 Console.WriteLine($"Resolved: {isSuccessfull}");
 Console.WriteLine(result.Grid.GetDescription());
+Console.WriteLine();
+Console.WriteLine(result.Grid.GetStepsDescription());
 
 Console.ReadKey();

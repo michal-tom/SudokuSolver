@@ -10,6 +10,7 @@
             this.RowCellsGroups = new List<CellsGroup>();
             this.ColumnCellsGroups = new List<CellsGroup>();
             this.BoxCellsGroups = new List<CellsGroup>();
+            this.SolvingSteps = new List<SolvingStep>();
         }
 
         public IList<Cell> Cells { get; set; }
@@ -19,6 +20,8 @@
         public IList<CellsGroup> ColumnCellsGroups { get; set; }
 
         public IList<CellsGroup> BoxCellsGroups { get; set; }
+
+        public IList<SolvingStep> SolvingSteps { get; set; }
 
         public bool Done =>
             this.Cells != null &&
@@ -54,6 +57,18 @@
                 }
 
                 sb.AppendLine("|");
+            }
+
+            return sb.ToString();
+        }
+
+        public string GetStepsDescription()
+        {
+            var sb = new StringBuilder();
+
+            foreach (var step in this.SolvingSteps)
+            {
+                sb.AppendLine(step.ToString());
             }
 
             return sb.ToString();
