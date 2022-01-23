@@ -23,12 +23,10 @@
 
         public IList<SolvingStep> SolvingSteps { get; set; }
 
-        public bool Done =>
+        public bool Solved =>
             this.Cells != null &&
             this.Cells.Count == Consts.GridCellsCount &&
-            this.Cells.All(p => p.Done) == true;
-
-        public byte EmptyCellsCount => (byte) (Consts.GridCellsCount - this.Cells?.Count(p => p.Done) ?? 0);
+            this.Cells.All(p => p.Solved) == true;
 
         public IEnumerable<CellsGroup> AllGridCellsGroups => this.RowCellsGroups.Concat(this.ColumnCellsGroups).Concat(this.BoxCellsGroups);
 

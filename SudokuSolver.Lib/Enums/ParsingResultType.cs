@@ -12,6 +12,6 @@
 
         NotEnoughValues = 4,
 
-        WrongValues = 5
+        NotValid = 5
     }
 }

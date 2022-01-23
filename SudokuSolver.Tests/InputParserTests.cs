@@ -22,7 +22,7 @@ namespace SudokuSolver.Tests
         {
             var result = InputParser.ParseGridData(inputGridString);
 
-            Assert.AreEqual(false, result.IsSuccessfull);
+            Assert.IsFalse(result.IsSuccessfull);
             Assert.AreNotEqual(ParsingResultType.NoError, result.Type);
         }
 
@@ -35,7 +35,7 @@ namespace SudokuSolver.Tests
         {
             var result = InputParser.ParseGridData(inputGridString);
 
-            Assert.AreEqual(true, result.IsSuccessfull);
+            Assert.IsTrue(result.IsSuccessfull);
             Assert.AreEqual(ParsingResultType.NoError, result.Type);
             Assert.IsNotNull(result.Grid);
         }

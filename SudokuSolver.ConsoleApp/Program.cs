@@ -1,9 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using SudokuSolver.Lib;
+﻿using SudokuSolver.Lib;
 using SudokuSolver.Parser;
 
-Console.WriteLine("Sudoku Solver app");
+Console.WriteLine("Sudoku Solver App");
 Console.WriteLine();
 Console.WriteLine($"Input string: {args[0]}");
 Console.WriteLine();
@@ -12,22 +10,30 @@ var result = InputParser.ParseGridData(args[0]);
 
 if (result == null || !result.IsSuccessfull || result.Grid == null)
 {
-    //TODO: print error
-    //Console.WriteLine("Input string is empty!");
-    //Console.WriteLine($"Input string should have exactly {Consts.GridCellsCount} chars (passed string has {inputChars.Length} chars)!");
-    //Console.WriteLine($"Input string contains forbidden chars!");
-    Console.WriteLine("Incorrect input string!");
+    Console.WriteLine(result?.GetParsingErrorMessage() ?? "Incorrect input string!");
     return;
 }
 
 Console.WriteLine("Input grid:");
 Console.WriteLine(result.Grid.GetDescription());
 
-var isSuccessfull = GridResolver.TrySolve(result.Grid);
+var startTime = DateTime.Now;
+var isSolved = GridResolver.TrySolve(result.Grid) && result.Grid.Solved;
+var endTime = DateTime.Now;
+var totalTimeInMs = (int)(endTime - startTime).TotalMilliseconds;
 
-Console.WriteLine($"Resolved: {isSuccessfull}");
-Console.WriteLine(result.Grid.GetDescription());
+Console.WriteLine($"Time: {totalTimeInMs} ms");
 Console.WriteLine();
-Console.WriteLine(result.Grid.GetStepsDescription());
+Console.WriteLine($"Resolved: {isSolved}");
+
+if (isSolved)
+{
+    Console.WriteLine();
+    Console.WriteLine($"Valid: {GridValidator.Validate(result.Grid)}");
+    Console.WriteLine();
+    Console.WriteLine(result.Grid.GetDescription());
+    Console.WriteLine();
+    // Console.WriteLine(result.Grid.GetStepsDescription());
+}
 
 Console.ReadKey();

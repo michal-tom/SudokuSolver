@@ -24,12 +24,12 @@
 
             if (!GridValidator.Validate(grid))
             {
-                return new ParsingResult { IsSuccessfull = false, Type = ParsingResultType.NotEnoughValues };
+                return new ParsingResult { IsSuccessfull = false, Type = ParsingResultType.NotValid };
             }
 
             GridPreparator.AnalyzeCells(grid);
 
-            return new ParsingResult { IsSuccessfull = true, Type = ParsingResultType.NoError, Grid = grid };
+            return new ParsingResult { IsSuccessfull = true, Grid = grid };
         }
 
         private static ParsingResult ValidateInputString(string input)

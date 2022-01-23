@@ -26,7 +26,7 @@
 
         public Grid Grid { get; set; }
 
-        public bool Done => this.Value.HasValue;
+        public bool Solved => this.Value.HasValue;
 
         public CellsGroup? RowCellsGroup => this.Grid?.RowCellsGroups.FirstOrDefault(p => p.Number == this.RowNumber);
 

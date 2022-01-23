@@ -17,14 +17,12 @@
 
         public IList<Cell> Cells { get; set; }
 
-        public bool Done =>
+        public bool Solved =>
             this.Cells != null &&
             this.Cells.Count == Consts.GridCellsGroupsCount &&
-            this.Cells.All(p => p.Done) == true;
+            this.Cells.All(p => p.Solved) == true;
 
-        public byte EmptyCellsCount => (byte) (Consts.GridCellsGroupsCount - this.Cells?.Count(p => p.Done) ?? 0);
-
-        public IEnumerable<byte> CellsValues => this.Cells?.Where(p => p.Done).Select(p => p.Value.Value) ?? new List<byte>();
+        public IEnumerable<byte> CellsValues => this.Cells?.Where(p => p.Solved).Select(p => p.Value.HasValue ? p.Value.Value : default) ?? new List<byte>();
 
         public IEnumerable<byte> AvailableCellsValues => Consts.AvailableValues.Except(this.CellsValues);
     }

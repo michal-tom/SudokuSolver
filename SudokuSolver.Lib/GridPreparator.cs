@@ -15,7 +15,7 @@
 
         public static void AnalyzeCells(Grid grid)
         {
-            foreach (var cell in grid.Cells.Where(p => !p.Done))
+            foreach (var cell in grid.Cells.Where(p => !p.Solved))
             {
                 var availableValues = Consts.AvailableValues.AsEnumerable();
                 if (cell.RowCellsGroup != null)
